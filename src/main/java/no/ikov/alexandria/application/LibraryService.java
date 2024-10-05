@@ -1,5 +1,6 @@
 package no.ikov.alexandria.application;
 
+import no.ikov.alexandria.exceptions.BookNotFoundException;
 import no.ikov.alexandria.models.Book;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +27,7 @@ public class LibraryService {
         return repo.getAvailableBooks();
     }
 
-    public Book getBookById(int id) {
+    public Book getBookById(int id) throws BookNotFoundException {
         return repo.getBookById(id);
     }
 

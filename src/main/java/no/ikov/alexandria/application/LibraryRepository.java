@@ -1,6 +1,7 @@
 package no.ikov.alexandria.application;
 
 import com.github.javafaker.Faker;
+import no.ikov.alexandria.exceptions.BookNotFoundException;
 import no.ikov.alexandria.models.Author;
 import no.ikov.alexandria.models.Book;
 import no.ikov.alexandria.models.Location;
@@ -57,7 +58,9 @@ public class LibraryRepository {
                 .filter(b -> b.getBookId() == id)
                 .findFirst()
                 .orElse(null);
-        System.out.println(id + " "+ book);
+        if (book == null) {
+            throw new BookNotFoundException(id);
+        }
         return book;
     }
 
