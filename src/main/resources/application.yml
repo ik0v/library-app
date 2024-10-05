@@ -1,0 +1,7 @@
+spring:
+    application:
+        name: Alexandria
+
+logging:
+    level:
+        root: INFO

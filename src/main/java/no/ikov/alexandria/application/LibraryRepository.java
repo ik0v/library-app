@@ -18,13 +18,13 @@ public class LibraryRepository {
     public LibraryRepository() {
         library = new ArrayList<>();
         Faker faker = new Faker();
-        for (int i = 0; i < 50; i++) {
+        for (int i = 1; i <= 50; i++) {
             library.add(new Book(
                     i,
                     Faker.instance().book().title(),
-                    new Author(Faker.instance().name().firstName(), Faker.instance().name().lastName()),
-                    Faker.instance().book().publisher(),
-                    new Status(Faker.instance().random().nextBoolean()),
+                    new Author(faker.name().firstName(), faker.name().lastName()),
+                    faker.book().publisher(),
+                    new Status(faker.random().nextBoolean()),
                     new Location(faker.letterify("Section ?").toUpperCase(), faker.numerify("Shelf ##"))
             ));
         }
@@ -52,16 +52,19 @@ public class LibraryRepository {
     }
 
     public Book getBookById(int id) {
-        return library
+        Book book = library
                 .stream()
                 .filter(b -> b.getBookId() == id)
                 .findFirst()
                 .orElse(null);
+        System.out.println(id + " "+ book);
+        return book;
     }
 
     public Book addNewBook(Book newBook) {
+        newBook.setBookId(library.size()+1);
         library.add(newBook);
-        return getBookById(newBook.getBookId());
+        return getBookById(library.size());
     }
 
     public Book changeStatusById(int id, Status newStatus) {
