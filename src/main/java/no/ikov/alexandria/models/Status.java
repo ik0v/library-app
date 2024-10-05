@@ -8,5 +8,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Status {
-    private boolean available;
+
+    private boolean available = false;
 }

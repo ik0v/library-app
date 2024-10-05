@@ -1,6 +1,8 @@
 package no.ikov.alexandria.application;
 
+import jakarta.validation.Valid;
 import no.ikov.alexandria.models.Book;
+import no.ikov.alexandria.models.Status;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -42,7 +44,10 @@ public class LibraryController {
     }
 
     @PostMapping()
-    public ResponseEntity<Book> addBook(@RequestBody Book newBook) {
+    public ResponseEntity<Book> addBook(@RequestBody @Valid Book newBook) {
+        if (newBook.getStatus() == null) {
+            newBook.setStatus(new Status());  // Ensure status is set to default
+        }
         return new ResponseEntity<>(libraryService.addNewBook(newBook), HttpStatus.CREATED);
     }
 
