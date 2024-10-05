@@ -9,4 +9,5 @@ public record ErrorResponse(
         int statusCode,
         LocalDateTime timestamp
 ) {
+
 }
