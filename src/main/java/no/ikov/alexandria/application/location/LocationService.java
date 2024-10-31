@@ -1,5 +1,6 @@
 package no.ikov.alexandria.application.location;
 
+import no.ikov.alexandria.exceptions.LocationNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +21,11 @@ public class LocationService {
     }
 
     public Location findById(long id) {
-        return locationRepo.findById(id).orElse(null);
+        try {
+            return locationRepo.findById(id).orElseThrow();
+        } catch (Exception e) {
+            throw new LocationNotFoundException(id);
+        }
     }
 
     public Location save(Location location) {

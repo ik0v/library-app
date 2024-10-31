@@ -4,6 +4,7 @@ import com.github.javafaker.Faker;
 import no.ikov.alexandria.application.author.Author;
 import no.ikov.alexandria.application.author.AuthorService;
 import no.ikov.alexandria.application.book.Book;
+import no.ikov.alexandria.application.book.BookDto;
 import no.ikov.alexandria.application.book.BookService;
 import no.ikov.alexandria.application.book.Status;
 import no.ikov.alexandria.application.bookevent.BookEvent;
@@ -71,12 +72,14 @@ public class InitData implements CommandLineRunner {
         List<Book> books = new ArrayList<>();
         for (long i = 0; i < 20; i++) {
             books.add(bookService.save(
-                            new Book(
+                            new BookDto(
                                     faker.book().title(),
                                     faker.book().publisher(),
-                                    Status.AVAILABLE,
-                                    getRandomAuthors(authors),
-                                    getRandomLocation(locations)
+                                    getRandomLocation(locations).getLocation_id(),
+                                    getRandomAuthors(authors)
+                                            .stream()
+                                            .map(Author::getId)
+                                            .toList()
                             )
                     )
             );

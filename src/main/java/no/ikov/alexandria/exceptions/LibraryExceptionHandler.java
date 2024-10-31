@@ -19,4 +19,14 @@ public class LibraryExceptionHandler {
                 .timestamp(LocalDateTime.now())
                 .build(), HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler(LocationNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleLocationNotFoundException() {
+        return new ResponseEntity<>(ErrorResponse
+                .builder()
+                .errorMessage("Location not found")
+                .statusCode(404)
+                .timestamp(LocalDateTime.now())
+                .build(), HttpStatus.NOT_FOUND);
+    }
 }

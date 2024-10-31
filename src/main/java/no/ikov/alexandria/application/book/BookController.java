@@ -29,8 +29,8 @@ public class BookController {
     }
 
     @PostMapping
-    public ResponseEntity<Book> createBook(@RequestBody Book book) {
-        return new ResponseEntity<>(bookService.save(book), HttpStatus.CREATED);
+    public ResponseEntity<Book> createBook(@RequestBody BookDto bookDto) {
+        return new ResponseEntity<>(bookService.save(bookDto), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")
