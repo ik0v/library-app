@@ -1,0 +1,53 @@
+spring:
+  application:
+    name: Alexandria
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+  datasource:
+    password: pirate
+    username: appuser
+    url: jdbc:postgresql://localhost:5432/appdb
+
+server:
+  error:
+    include-message: always
+    whitelabel:
+      enabled: false
+
+management:
+  server:
+    port: 8080
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+  metrics:
+    distribution:
+      percentiles-histogram:
+        "http": true
+
+springdoc:
+  api-docs:
+    path:
+      /api-doc
+  swagger-ui:
+    path:
+      /swagger-ui.html
+    enabled: true
+
+alexandria:
+  initialBooks: 100
+  initialAuthors: 7
+
+
+
+
+
+
+

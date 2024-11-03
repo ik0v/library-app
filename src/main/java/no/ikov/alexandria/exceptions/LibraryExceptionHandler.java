@@ -10,11 +10,29 @@ import java.time.LocalDateTime;
 @ControllerAdvice
 public class LibraryExceptionHandler {
 
-    @ExceptionHandler(BookNotFoundException.class)
-    public ResponseEntity<ErrorResponse> handleBookNotFoundException() {
+    @ExceptionHandler(BookException.class)
+    public ResponseEntity<ErrorResponse> handleBookException(Exception ex) {
         return new ResponseEntity<>(ErrorResponse
                 .builder()
-                .errorMessage("Book not found")
+                .errorMessage(ex.getMessage())
+                .timestamp(LocalDateTime.now())
+                .build(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(PatronException.class)
+    public ResponseEntity<ErrorResponse> handlePatronException(Exception ex) {
+        return new ResponseEntity<>(ErrorResponse
+                .builder()
+                .errorMessage(ex.getMessage())
+                .timestamp(LocalDateTime.now())
+                .build(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(LocationNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleLocationNotFoundException() {
+        return new ResponseEntity<>(ErrorResponse
+                .builder()
+                .errorMessage("Location not found")
                 .statusCode(404)
                 .timestamp(LocalDateTime.now())
                 .build(), HttpStatus.NOT_FOUND);

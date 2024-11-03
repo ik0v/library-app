@@ -1,13 +1,32 @@
 spring:
-    application:
-        name: Alexandria
-
-#logging:
-#    level:
-#        root: INFO
-
+  application:
+    name: alexandria
+  jpa:
+    database: postgresql
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+  datasource:
+    url: jdbc:postgresql://localhost:5432/appdb
+    username: appuser
+    password: pirate
+  flyway:
+    enabled: true
+#  thymeleaf:
+#    cache: false
+#  cache:
+#    type: none
 server:
-    error:
-        include-message: always
-        whitelabel:
-            enabled: false
+  error:
+    include-message: always
+    whitelabel:
+      enabled: false
+
+management:
+  server.port : 8800
+  endpoints.web.exposure.include: "*"
+  endpoint.health.show-details: always
+  metrics:
+    distribution:
+      percentiles-histogram:
+        "http": true
