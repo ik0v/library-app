@@ -18,7 +18,7 @@ public class Patron {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "patron_gen")
     @SequenceGenerator(name = "patron_gen", sequenceName = "patron_seq", allocationSize = 1)
     @Column(name = "patron_id", nullable = false)
-    private Long patronId;
+    private long patronId;
 
     private String firstName;
     private String lastName;
@@ -33,6 +33,5 @@ public class Patron {
     @OneToMany(mappedBy = "patron")
     @JsonIgnoreProperties("patron")
     private List<BookEvent> events;
-
 
 }

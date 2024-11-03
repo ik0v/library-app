@@ -12,6 +12,7 @@ import no.ikov.alexandria.application.bookevent.BookEventService;
 import no.ikov.alexandria.application.bookevent.BookEventType;
 import no.ikov.alexandria.application.location.Location;
 import no.ikov.alexandria.application.location.LocationService;
+import no.ikov.alexandria.application.patron.Patron;
 import no.ikov.alexandria.application.patron.PatronService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -88,13 +89,12 @@ public class InitData implements CommandLineRunner {
         //create patrons
         for (int i = 0; i < 25; i++) {
             patronService.save(
-                    new no.ikov.alexandria.application.patron.Patron(
+                    new Patron(
                             faker.name().firstName(),
                             faker.name().lastName(),
                             LocalDate.ofInstant(faker.date().birthday().toInstant(), ZoneId.systemDefault())
                     )
             );
-
         }
 
         //create events

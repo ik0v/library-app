@@ -15,7 +15,7 @@ public class Location {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "location_gen")
     @SequenceGenerator(name = "location_gen", sequenceName = "location_seq", allocationSize = 1)
     @Column(name = "location_id", nullable = false)
-    private Long location_id;
+    private long location_id;
     private String shelf;
 
     @OneToMany(mappedBy = "location")
@@ -25,4 +25,5 @@ public class Location {
     public Location(String shelf) {
         this.shelf = shelf;
     }
+
 }

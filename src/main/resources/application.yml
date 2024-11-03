@@ -12,6 +12,10 @@ spring:
     password: pirate
   flyway:
     enabled: true
+#  thymeleaf:
+#    cache: false
+#  cache:
+#    type: none
 server:
   error:
     include-message: always

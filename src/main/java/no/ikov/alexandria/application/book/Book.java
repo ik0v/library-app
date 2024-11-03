@@ -9,6 +9,7 @@ import no.ikov.alexandria.application.author.Author;
 import no.ikov.alexandria.application.bookevent.BookEvent;
 import no.ikov.alexandria.application.location.Location;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -31,7 +32,7 @@ public class Book {
             inverseJoinColumns = @JoinColumn(name = "author_id")
     )
     @JsonIgnoreProperties("books")
-    private List<Author> authors;
+    private List<Author> authors = new ArrayList<>();
 
     @ManyToOne()
     @JoinColumn(name = "location_id")
@@ -40,13 +41,13 @@ public class Book {
 
     @OneToMany(mappedBy = "book")
     @JsonIgnoreProperties("book")
-    private List<BookEvent> events;
+    private List<BookEvent> events = new ArrayList<>();
 
     public Book(String title, String publisher, Status status, List<Author> authors, Location location) {
         this.title = title;
         this.publisher = publisher;
         this.status = status;
-        this.authors = authors;
+        this.authors = new ArrayList<>(authors);
         this.location = location;
     }
 }

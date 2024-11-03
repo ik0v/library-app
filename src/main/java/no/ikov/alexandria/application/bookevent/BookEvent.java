@@ -1,5 +1,6 @@
 package no.ikov.alexandria.application.bookevent;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,16 +18,18 @@ public class BookEvent {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "book_event_gen")
     @SequenceGenerator(name = "book_event_gen", sequenceName = "event_seq", allocationSize = 1)
     @Column(name = "event_id", nullable = false)
-    private Long id;
+    private long id;
     private BookEventType type;
     private LocalDateTime date;
 
     @ManyToOne
     @JoinColumn(name = "book_id")
+    @JsonIgnoreProperties("events")
     private Book book;
 
     @ManyToOne
     @JoinColumn(name = "patron_id")
+    @JsonIgnoreProperties("events")
     private Patron patron;
 
     public BookEvent(BookEventType type, LocalDateTime date, Book book, Patron patron) {

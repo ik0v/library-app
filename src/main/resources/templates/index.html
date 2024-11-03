@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Alexandria Library Home Page</title>
+    <style>
+        table {
+            border-collapse: separate;
+            border-spacing: 20px 3px ; /* Adds space between columns and rows */
+        }
+        th, td {
+            text-align: left;
+        }
+        td > table {
+            border-spacing: 0 2px;
+            padding: 0;
+        }
+    </style>
+</head>
+<body>
+<header>
+
+</header>
+
+<div align="center">
+    <h1>Add new book</h1>
+    <a href="/html/addNewBook">Click here to add a new book</a>
+</div>
+
+<table>
+    <thead>
+    <tr>
+        <th> Id </th>
+        <th> Title </th>
+        <th> Author </th>
+        <th> Publisher </th>
+        <th> Available? </th>
+        <th> Location </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:if="${books == null or books.empty}">
+        <td colspan="2"> No Books Available </td>
+    </tr>
+    <tr th:each="book : ${books}">
+        <td><span th:text="${book.id}"> Id </span></td>
+        <td><span th:text="${book.title}"> Title </span></td>
+        <td>
+            <table>
+                <tr th:each="author: ${book.authors}">
+                    <td><span th:text="|${author.firstName} ${author.lastName}|"> Author </span></td>
+                </tr>
+            </table>
+        </td>
+        <td><span th:text="${book.publisher}"> Publisher</span></td>
+        <td><span th:text="${book.status}"> Available</span></td>
+        <td><span th:text="${book.location.shelf}"> Location</span></td>
+    </tr>
+    </tbody>
+</table>
+
+
+</body>
+<footer>
+</footer>
+
+</html>
