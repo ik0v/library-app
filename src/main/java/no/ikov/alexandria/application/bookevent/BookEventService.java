@@ -2,16 +2,15 @@ package no.ikov.alexandria.application.bookevent;
 
 import no.ikov.alexandria.application.book.Book;
 import no.ikov.alexandria.application.book.BookRepo;
-import no.ikov.alexandria.application.book.BookService;
 import no.ikov.alexandria.application.book.Status;
 import no.ikov.alexandria.application.patron.Patron;
 import no.ikov.alexandria.application.patron.PatronRepo;
-import no.ikov.alexandria.exceptions.BookNotFoundException;
-import no.ikov.alexandria.exceptions.PatronNotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
+import no.ikov.alexandria.exceptions.BookException;
+import no.ikov.alexandria.exceptions.PatronException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -47,17 +46,20 @@ public class BookEventService {
         bookEventRepo.deleteById(id);
     }
 
-    public BookEvent checkout(BookEventDto bookEventDto) {
+    public BookEvent checkOut(BookEventDto bookEventDto) {
         Book book;
         Patron patron;
         try {
             patron = patronRepo.findById(bookEventDto.patronId()).orElseThrow();
         } catch (Exception e) {
-            throw new PatronNotFoundException((int) bookEventDto.patronId());
+            throw new PatronException("Patron with id " + bookEventDto.patronId() + " not found");
         } try {
             book = bookRepo.findById(bookEventDto.bookId()).orElseThrow();
         } catch (Exception e) {
-            throw new BookNotFoundException((int) bookEventDto.bookId());
+            throw new BookException("Book with id " + bookEventDto.bookId() + " not found");
+        }
+        if(book.getStatus() != Status.AVAILABLE) {
+            throw new BookException("Book with id " + bookEventDto.bookId() + " is not available");
         }
         book.setStatus(Status.CHECKED_OUT);
         bookRepo.save(book);
@@ -70,15 +72,24 @@ public class BookEventService {
         try {
             patron = patronRepo.findById(bookEventDto.patronId()).orElseThrow();
         } catch (Exception e) {
-            throw new PatronNotFoundException((int) bookEventDto.patronId());
+            throw new PatronException("Patron with id " + bookEventDto.patronId() + " not found");
         } try {
             book = bookRepo.findById(bookEventDto.bookId()).orElseThrow();
         } catch (Exception e) {
-            throw new BookNotFoundException((int) bookEventDto.bookId());
+            throw new BookException("Book with id " + bookEventDto.bookId() + " not found");
+        }
+        if(book.getStatus() != Status.CHECKED_OUT) {
+            throw new BookException("Book with id " + bookEventDto.bookId() + " is not checked out");
+        }
+        BookEvent lastEvent = bookEventRepo.findBookEventByBookId(book.getId()).getLast();
+        if(lastEvent == null || lastEvent.getType() != BookEventType.CHECKOUT) {
+            throw new BookException("Book with id " + bookEventDto.bookId() + " is not checked out");
+        } if(!lastEvent.getPatron().equals(patron)) {
+            throw new PatronException("Patron with id " + bookEventDto.patronId() + " did not check out that book");
         }
         book.setStatus(Status.AVAILABLE);
         bookRepo.save(book);
-        return bookEventRepo.save(new BookEvent(BookEventType.CHECK_IN, LocalDateTime.now(), book, patron));
+        return bookEventRepo.save(new BookEvent(BookEventType.CHECKOUT, LocalDateTime.now(), book, patron));
     }
 
     public BookEvent findBookEventId(long bookEventId) {

@@ -2,6 +2,7 @@ package no.ikov.alexandria.application.patron;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,7 +12,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Entity
-@Getter @Setter
+@Data
 @NoArgsConstructor
 public class Patron {
     @Id

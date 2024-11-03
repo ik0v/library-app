@@ -33,7 +33,7 @@ public class CheckoutController {
 
     @PostMapping("checkout")
     public ResponseEntity<BookEvent> checkout(@RequestBody BookEventDto bookEventDto) {
-        return new ResponseEntity<>(bookEventService.checkout(bookEventDto), HttpStatus.CREATED);
+        return new ResponseEntity<>(bookEventService.checkOut(bookEventDto), HttpStatus.CREATED);
     }
 
     @PostMapping("/checkin")
