@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="ISO-8859-1">
     <title>New Book</title>
@@ -7,26 +7,43 @@
 <body>
 <div align="center">
     <h1>New Book</h1>
-     <form action="#" th:action="@{/html/addNewBook}" method="post" th:object="${book}">
+    <form action="#" th:action="@{/html/addNewBook}" method="post" th:object="${book}">
         <label>Title:</label>
         <input type="text" th:field="*{title}" />
         <br>
-<!--        <label>Author:</label>-->
-<!--        <input type="text" th:field="*{author.firstName}" />-->
-<!--        <input type="text" th:field="*{author.lastName}" />-->
-        <br>
+
         <label>Publisher:</label>
         <input type="text" th:field="*{publisher}" />
         <br>
-<!--        <label>Available:</label>-->
-<!--        <input type="radio" th:field="*{status}" value="AVAILABLE" />True-->
-<!--        <input type="radio" th:field="*{status}" value="CHECKED_OUT"/>False-->
-        <br>
+
         <label>Location:</label>
         <input type="text" th:field="*{locationId}" />
         <br><br>
+
+        <label>Authors:</label>
+        <div id="authors">
+            <!-- Dynamically add author fields here -->
+            <div th:each="authorId, stat : *{authorIds}">
+                <input type="number" th:field="*{authorIds[__${stat.index}__]}" placeholder="Enter Author ID" />
+            </div>
+        </div>
+        <button type="button" onclick="addAuthorField()">Add Another Author</button>
+        <br><br>
+
         <button type="submit">Register</button>
     </form>
 </div>
+
+<script>
+  // JavaScript to dynamically add author ID input fields
+  function addAuthorField() {
+    const authorsDiv = document.getElementById("authors");
+    const newField = document.createElement("input");
+    newField.type = "number";
+    newField.name = "authorIds"; // Align with the field in BookDto
+    newField.placeholder = "Enter Author ID";
+    authorsDiv.appendChild(newField);
+  }
+</script>
 </body>
 </html>

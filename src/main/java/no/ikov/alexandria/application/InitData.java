@@ -14,8 +14,6 @@ import no.ikov.alexandria.application.location.Location;
 import no.ikov.alexandria.application.location.LocationService;
 import no.ikov.alexandria.application.patron.Patron;
 import no.ikov.alexandria.application.patron.PatronService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -26,7 +24,8 @@ import java.util.List;
 import java.util.Random;
 
 @Component
-public class InitData implements CommandLineRunner {
+public class InitData //implements CommandLineRunner
+{
 
     private final AuthorService authorService;
     private final BookService bookService;
@@ -36,7 +35,6 @@ public class InitData implements CommandLineRunner {
 
     Faker faker = Faker.instance();
 
-    @Autowired
     public InitData(AuthorService authorService, BookService bookService, LocationService locationService, PatronService patronService, BookEventService bookEventService) {
         this.authorService = authorService;
         this.bookService = bookService;
@@ -45,8 +43,8 @@ public class InitData implements CommandLineRunner {
         this.bookEventService = bookEventService;
     }
 
-    @Override
-    public void run(String... args) {
+    // run
+    public void createTestData(String... args) {
 
         // Create locations
         List<Location> locations = new ArrayList<>();
