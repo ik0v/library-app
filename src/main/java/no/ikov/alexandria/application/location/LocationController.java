@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/location")
+@RequestMapping("/api/locations")
 public class LocationController {
 
     private final LocationService locationService;
